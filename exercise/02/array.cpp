@@ -64,7 +64,8 @@ array& array::operator=(array const& other)
     if (this == std::addressof(other)) return *this;
 
     auto tmp = other;
-    *this = std::move(tmp);
+    std::swap(p, tmp.p);
+    std::swap(n, tmp.n);
     return *this;
 }
 
@@ -72,9 +73,11 @@ array& array::operator=(array&& other) noexcept
 {
     if (this == std::addressof(other)) return *this;
 
-    cleanup_resources();
     std::swap(p, other.p);
     std::swap(n, other.n);
+
+    other.cleanup_resources();
+
     return *this;
 }
 
