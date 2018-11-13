@@ -22,6 +22,8 @@ public:
     array& operator=(array&& other) noexcept;
 
     ~array();
+private:
+    void cleanup_resources() noexcept;
 };
 
 static_assert(std::is_default_constructible_v<array>);

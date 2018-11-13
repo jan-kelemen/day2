@@ -70,13 +70,18 @@ array& array::operator=(array const& other)
 
 array& array::operator=(array&& other) noexcept
 {
-    this->~array();
+    cleanup_resources();
     std::swap(p, other.p);
     std::swap(n, other.n);
     return *this;
 }
 
 array::~array()
+{
+    cleanup_resources();
+}
+
+void array::cleanup_resources() noexcept
 {
     delete[] p;
     p = nullptr;
