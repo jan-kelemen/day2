@@ -58,6 +58,26 @@ public:
 		
 	}
 
+    TEST_METHOD(array_move_assignment)
+	{
+        array a(size, value);
+        array b;
+        b = std::move(a);
+        Assert::AreEqual(0, a.size());
+        for (int i = 0; i < b.size(); ++i)
+            Assert::AreEqual(value, b.at(i));
+	}
+
+    TEST_METHOD(array_move_assignment_from_initialized_value)
+	{
+        array a(size, value);
+        array b(size, value);
+        b = std::move(a);
+        Assert::AreEqual(0, a.size());
+        for (int i = 0; i < b.size(); ++i)
+            Assert::AreEqual(value, b.at(i));
+	}
+
 	TEST_METHOD(array_copy_constructor)
 	{
 		

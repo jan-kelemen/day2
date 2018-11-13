@@ -6,8 +6,8 @@
 
 class array
 {
-	double* p;
-	int n;
+	double* p{nullptr};
+	int n{0};
 public:
   explicit array(int size = 0);
   array(int size, double value);
@@ -18,7 +18,8 @@ public:
   double& at(int index);
   double const& at(int index) const;
 
-  array& operator=(array other);
+  array& operator=(array const& other);
+  array& operator=(array&& other) noexcept;
 
   ~array();
 };

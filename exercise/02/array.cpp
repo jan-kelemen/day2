@@ -1,6 +1,7 @@
 #include "array.h"
 
 #include <iterator>
+#include <memory>
 #include <stdexcept>
 
 namespace
@@ -58,13 +59,22 @@ double const& array::at(int index) const
   return p[index];
 }
 
-array& array::operator=(array other)
+array& array::operator=(array const& other)
 {
+  if(this == std::addressof(other)) return *this;
+
+  auto tmp = other;
+  *this = std::move(tmp);
+  return *this;
+}
+
+array& array::operator=(array&& other) noexcept
+{
+  this->~array();
   std::swap(p, other.p);
   std::swap(n, other.n);
   return *this;
 }
-
 
 array::~array()
 {
